@@ -188,10 +188,16 @@ export default function ChaptersPage() {
                                             </div>
                                             <div className="space-x-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
-                                                    onClick={() => openEditModal(chapter)}
+                                                    onClick={() => router.push(`/workbench/${id}/chapters/${chapter.id}`)}
                                                     className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
                                                 >
-                                                    编辑
+                                                    编辑内容
+                                                </button>
+                                                <button
+                                                    onClick={() => openEditModal(chapter)}
+                                                    className="text-gray-600 hover:text-gray-800 dark:text-gray-400"
+                                                >
+                                                    重命名
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteClick(chapter.id)}
@@ -228,10 +234,16 @@ export default function ChaptersPage() {
                                     </div>
                                     <div className="space-x-2 text-sm">
                                         <button
-                                            onClick={() => openEditModal(chapter)}
+                                            onClick={() => router.push(`/workbench/${id}/chapters/${chapter.id}`)}
                                             className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
                                         >
-                                            编辑
+                                            编辑内容
+                                        </button>
+                                        <button
+                                            onClick={() => openEditModal(chapter)}
+                                            className="text-gray-600 hover:text-gray-800 dark:text-gray-400"
+                                        >
+                                            重命名
                                         </button>
                                         <button
                                             onClick={() => handleDeleteClick(chapter.id)}
