@@ -1,0 +1,170 @@
+# AI小说生成系统 - 作家Agent配置
+# 作家Agent负责根据架构师的设计生成具体的小说内容
+
+[agent]
+# Agent名称
+name = "writer"
+# Agent描述
+description = "小说作家，负责根据架构师的设计生成具体的小说内容"
+# Agent类型
+type = "writer"
+# Agent版本
+version = "1.0.0"
+# 是否启用
+enabled = true
+# 执行优先级（1-10，数字越小优先级越高）
+priority = 4
+
+[llm]
+# 大语言模型配置
+# 基础API URL
+base_url = "https://api.deepseek.com"
+# 模型名称
+model = "deepseek-chat"
+# 温度参数（0.0-2.0）
+temperature = 0.8
+# 最大token数
+max_tokens = 4096
+# Top-p采样参数
+top_p = 0.9
+# 频率惩罚
+frequency_penalty = 0.1
+# 存在惩罚
+presence_penalty = 0.1
+# 停止标记
+stop = ["\n\n", "###", "章节结束", "待续"]
+
+[system_prompt]
+# 系统提示词
+content = """
+你是一个专业的小说作家。你的职责包括：
+1. 根据架构师的设计生成具体的小说内容
+2. 创作生动的人物对话和场景描写
+3. 保持文风一致性和情节连贯性
+4. 运用恰当的文学修辞和叙事技巧
+5. 确保内容符合目标读者的阅读习惯
+6. 在保持创意的同时遵循故事大纲
+
+你需要具备：
+- 出色的文学创作能力
+- 丰富的词汇和表达技巧
+- 对人物心理的深刻理解
+- 场景描写的生动想象力
+- 情节推进的节奏掌控力
+
+请使用中文进行创作，保持文笔优美、情节吸引人。
+"""
+
+[capabilities]
+# Agent能力配置
+# 是否支持多种文风
+multiple_writing_styles = true
+# 支持的文风
+supported_styles = ["古典", "现代", "简洁", "华丽", "幽默", "严肃", "诗意", "口语"]
+# 是否支持人物对话生成
+dialogue_generation = true
+# 是否支持场景描写
+scene_description = true
+# 是否支持心理描写
+psychological_description = true
+# 是否支持动作描写
+action_description = true
+# 是否支持环境描写
+environment_description = true
+
+[writing]
+# 写作配置
+# 默认章节长度（字）
+default_chapter_length = 3000
+# 章节长度范围（字）
+chapter_length_range = [1500, 5000]
+# 是否启用分段写作
+segmented_writing = true
+# 分段大小（字）
+segment_size = 500
+# 是否启用风格一致性检查
+style_consistency_check = true
+# 是否启用情节连贯性检查
+plot_continuity_check = true
+# 是否启用人物一致性检查
+character_consistency_check = true
+
+[quality]
+# 质量配置
+# 是否启用内容质量检查
+enabled = true
+# 质量检查规则
+quality_rules = ["文笔流畅性", "情节合理性", "人物一致性", "逻辑连贯性", "语言规范性"]
+# 最低质量分数（0-100）
+min_quality_score = 70
+# 是否启用自动重写
+auto_rewrite = true
+# 重写最大次数
+max_rewrite_attempts = 3
+
+[creativity]
+# 创意配置
+# 创意水平: low, medium, high, very_high
+creativity_level = "high"
+# 是否启用创意增强
+creativity_enhancement = true
+# 是否启用灵感激发
+inspiration_stimulation = true
+# 是否启用多版本生成
+multi_version_generation = true
+# 版本数量
+version_count = 3
+
+[output]
+# 输出配置
+# 输出格式: text, markdown, html
+format = "markdown"
+# 是否包含章节标题
+include_chapter_titles = true
+# 是否包含段落分隔
+include_paragraph_breaks = true
+# 是否包含对话标记
+include_dialogue_marks = true
+# 是否包含场景标记
+include_scene_marks = true
+# 是否包含情感标签
+include_emotion_tags = true
+
+[performance]
+# 性能配置
+# 是否启用内容缓存
+content_caching = true
+# 缓存过期时间（秒）
+cache_ttl = 3600
+# 是否启用批量生成
+batch_generation = true
+# 批处理大小
+batch_size = 5
+# 生成超时时间（秒）
+generation_timeout = 300
+# 最大并发生成任务
+max_concurrent_generations = 2
+
+[integration]
+# 集成配置
+# 是否与架构师Agent集成
+integrate_with_architect = true
+# 是否与审阅员Agent集成
+integrate_with_reviewer = true
+# 是否与数据维护员Agent集成
+integrate_with_data_keeper = true
+# 集成数据格式
+integration_format = "json"
+
+[monitoring]
+# 监控配置
+# 是否启用写作监控
+enabled = true
+# 监控指标
+metrics = ["生成速度", "内容质量", "风格一致性", "情节连贯性", "创意水平"]
+# 监控频率（秒）
+monitoring_interval = 60
+# 是否记录生成历史
+log_generation_history = true
+# 是否记录质量评分
+log_quality_scores = true

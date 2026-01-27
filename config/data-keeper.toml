@@ -1,0 +1,179 @@
+# AI小说生成系统 - 数据维护员Agent配置
+# 数据维护员Agent负责数据管理、存储、检索和一致性维护
+
+[agent]
+# Agent名称
+name = "data_keeper"
+# Agent描述
+description = "数据维护员，负责小说数据的管理、存储、检索和一致性维护"
+# Agent类型
+type = "data_keeper"
+# Agent版本
+version = "1.0.0"
+# 是否启用
+enabled = true
+# 执行优先级（1-10，数字越小优先级越高）
+priority = 3
+
+[llm]
+# 大语言模型配置
+# 基础API URL
+base_url = "https://api.deepseek.com"
+# 模型名称
+model = "deepseek-chat"
+# 温度参数（0.0-2.0）
+temperature = 0.3
+# 最大token数
+max_tokens = 4096
+# Top-p采样参数
+top_p = 0.7
+# 频率惩罚
+frequency_penalty = 0.0
+# 存在惩罚
+presence_penalty = 0.0
+# 停止标记
+stop = ["\n\n", "###", "数据", "记录"]
+
+[system_prompt]
+# 系统提示词
+content = """
+你是一个专业的数据维护员。你的职责包括：
+1. 管理和维护小说创作过程中的所有数据
+2. 确保数据的一致性和完整性
+3. 提供高效的数据检索和查询服务
+4. 处理数据备份和恢复
+5. 监控数据质量和一致性
+6. 协调不同Agent之间的数据交换
+
+你需要具备：
+- 严谨的数据管理能力
+- 出色的组织和分类能力
+- 对数据一致性的高度敏感
+- 高效的数据处理技巧
+
+请使用中文处理所有数据操作。
+"""
+
+[capabilities]
+# Agent能力配置
+# 是否支持数据存储
+data_storage = true
+# 是否支持数据检索
+data_retrieval = true
+# 是否支持数据验证
+data_validation = true
+# 是否支持数据备份
+data_backup = true
+# 是否支持数据同步
+data_synchronization = true
+# 是否支持数据版本控制
+data_versioning = true
+# 是否支持数据索引
+data_indexing = true
+
+[storage]
+# 存储配置
+# 存储类型: database, file, memory, hybrid
+storage_type = "hybrid"
+# 数据库存储配置
+database_storage = true
+# 文件存储配置
+file_storage = true
+# 内存缓存配置
+memory_cache = true
+# 缓存大小（MB）
+cache_size_mb = 1024
+# 存储路径
+storage_path = "./data"
+
+[data_types]
+# 数据类型配置
+# 支持的数据类型
+supported_types = [
+    "novel",     # 小说数据
+    "chapter",   # 章节数据
+    "character", # 角色数据
+    "setting",   # 设定数据
+    "outline",   # 大纲数据
+    "prompt",    # 提示词数据
+    "history",   # 历史记录
+    "metadata",  # 元数据
+]
+
+[validation]
+# 验证配置
+# 是否启用数据验证
+enabled = true
+# 验证规则
+rules = ["数据完整性检查", "数据一致性检查", "数据格式验证", "数据关系验证", "数据重复检查"]
+# 验证频率（秒）
+validation_interval = 300
+# 是否启用自动修复
+auto_repair = true
+
+[backup]
+# 备份配置
+# 是否启用自动备份
+enabled = true
+# 备份频率（小时）
+backup_interval = 6
+# 备份保留数量
+retention_count = 10
+# 备份路径
+backup_path = "./backups"
+# 备份格式
+backup_format = "json"
+# 是否启用增量备份
+incremental_backup = true
+
+[retrieval]
+# 检索配置
+# 是否启用全文检索
+full_text_search = true
+# 是否启用语义检索
+semantic_search = true
+# 检索缓存
+search_cache = true
+# 缓存过期时间（秒）
+cache_ttl = 1800
+# 最大检索结果数
+max_results = 100
+# 检索超时时间（秒）
+search_timeout = 30
+
+[consistency]
+# 一致性配置
+# 是否启用数据一致性检查
+enabled = true
+# 一致性检查频率（秒）
+check_interval = 60
+# 一致性规则
+rules = ["角色数据一致性", "情节数据一致性", "时间线一致性", "世界观一致性", "章节顺序一致性"]
+# 是否启用自动同步
+auto_sync = true
+
+[performance]
+# 性能配置
+# 是否启用查询优化
+query_optimization = true
+# 是否启用索引优化
+index_optimization = true
+# 是否启用缓存预热
+cache_warmup = true
+# 最大并发操作数
+max_concurrent_operations = 10
+# 操作超时时间（秒）
+operation_timeout = 60
+
+[monitoring]
+# 监控配置
+# 是否启用数据监控
+enabled = true
+# 监控指标
+metrics = ["存储使用率", "查询响应时间", "数据一致性状态", "备份状态", "缓存命中率"]
+# 监控频率（秒）
+monitoring_interval = 30
+# 是否启用告警
+alerts_enabled = true
+# 告警阈值
+alert_thresholds = { "storage_usage_percent" = 80, "query_time_ms" = 1000, "consistency_error_count" = 5 }

@@ -1,0 +1,82 @@
+# AI小说生成系统 - 应用基础配置
+# 应用全局设置
+
+[app]
+# 应用名称
+name = "NovelCraftLLM"
+# 应用版本
+version = "1.0.0"
+# 运行环境: development, staging, production
+environment = "development"
+# 日志级别: debug, info, warn, error
+log_level = "info"
+# 是否启用调试模式
+debug = true
+
+[server]
+# 服务器主机地址
+host = "0.0.0.0"
+# 服务器端口
+port = 3000
+# API前缀
+api_prefix = "/api/v1"
+# 请求超时时间（秒）
+request_timeout = 30
+# 最大请求体大小（MB）
+max_body_size = 10
+
+[ai]
+# 默认AI提供商
+default_provider = "deepseek"
+# 默认基础URL
+default_base_url = "https://api.deepseek.com"
+# 默认模型
+default_model = "deepseek-chat"
+# 默认温度
+default_temperature = 0.7
+# 默认最大token数
+default_max_tokens = 4096
+
+[rate_limit]
+# 是否启用速率限制
+enabled = true
+# 每分钟最大请求数
+requests_per_minute = 60
+# 令牌桶容量
+token_bucket_capacity = 100
+# 令牌填充速率（每秒）
+token_refill_rate = 1
+
+[cache]
+# 是否启用缓存
+enabled = true
+# 缓存类型: memory, redis
+type = "memory"
+# 缓存过期时间（秒）
+ttl = 3600
+# Redis连接配置（如果使用redis）
+redis_url = "redis://localhost:6379"
+
+[security]
+# 是否启用API密钥验证
+api_key_required = false
+# 允许的CORS来源
+cors_origins = ["http://localhost:3000", "http://localhost:3001"]
+# JWT密钥（用于认证）
+jwt_secret = "your-secret-key-change-in-production"
+# JWT过期时间（小时）
+jwt_expiry_hours = 24
+
+[features]
+# 是否启用多语言支持
+multilingual_support = true
+# 默认语言
+default_language = "zh-CN"
+# 支持的语言列表
+supported_languages = ["zh-CN", "en-US", "ja-JP"]
+# 是否启用实时生成
+realtime_generation = true
+# 是否启用批量生成
+batch_generation = true
+# 是否启用历史记录
+history_enabled = true

@@ -1,0 +1,184 @@
+# AI小说生成系统 - 审阅员Agent配置
+# 审阅员Agent负责审核和评估生成的小说内容质量
+
+[agent]
+# Agent名称
+name = "reviewer"
+# Agent描述
+description = "内容审阅员，负责审核和评估生成的小说内容质量"
+# Agent类型
+type = "reviewer"
+# Agent版本
+version = "1.0.0"
+# 是否启用
+enabled = true
+# 执行优先级（1-10，数字越小优先级越高）
+priority = 5
+
+[llm]
+# 大语言模型配置
+# 基础API URL
+base_url = "https://api.deepseek.com"
+# 模型名称
+model = "deepseek-chat"
+# 温度参数（0.0-2.0）
+temperature = 0.4
+# 最大token数
+max_tokens = 4096
+# Top-p采样参数
+top_p = 0.8
+# 频率惩罚
+frequency_penalty = 0.0
+# 存在惩罚
+presence_penalty = 0.0
+# 停止标记
+stop = ["\n\n", "###", "评分", "建议"]
+
+[system_prompt]
+# 系统提示词
+content = """
+你是一个专业的内容审阅员。你的职责包括：
+1. 审核生成的小说内容质量
+2. 评估文笔、情节、人物等方面的表现
+3. 提供具体的改进建议和修改意见
+4. 检查内容的一致性和逻辑性
+5. 识别潜在的问题和不足之处
+6. 给出综合评分和评级
+
+你需要具备：
+- 专业的文学批评能力
+- 敏锐的内容洞察力
+- 客观公正的评估态度
+- 丰富的编辑和校对经验
+- 对读者需求的深刻理解
+
+请使用中文提供详细、具体的审阅意见。
+"""
+
+[capabilities]
+# Agent能力配置
+# 是否支持多维度评估
+multi_dimensional_evaluation = true
+# 评估维度
+evaluation_dimensions = ["文笔", "情节", "人物", "逻辑", "创意", "可读性"]
+# 是否支持问题检测
+problem_detection = true
+# 是否支持改进建议
+improvement_suggestions = true
+# 是否支持自动修正建议
+auto_correction_suggestions = true
+# 是否支持比较评估
+comparative_evaluation = true
+# 是否支持趋势分析
+trend_analysis = true
+
+[evaluation]
+# 评估配置
+# 评估标准
+criteria = [
+    "文笔流畅性（语言表达是否流畅自然）",
+    "情节合理性（情节发展是否合理可信）",
+    "人物塑造（人物形象是否鲜明立体）",
+    "逻辑连贯性（故事逻辑是否连贯一致）",
+    "创意水平（内容是否具有创新性）",
+    "情感感染力（能否引发读者情感共鸣）",
+    "可读性（阅读体验是否舒适顺畅）",
+]
+# 评分体系: 百分制
+scoring_system = "percentage"
+# 评分等级
+rating_levels = { "优秀" = [
+    90,
+    100,
+], "良好" = [
+    75,
+    89,
+], "一般" = [
+    60,
+    74,
+], "较差" = [
+    0,
+    59,
+] }
+# 是否启用加权评分
+weighted_scoring = true
+# 权重配置
+weights = { "文笔" = 0.2, "情节" = 0.25, "人物" = 0.2, "逻辑" = 0.15, "创意" = 0.1, "可读性" = 0.1 }
+
+[quality]
+# 质量配置
+# 质量阈值
+quality_thresholds = { "通过阈值" = 70, "优秀阈值" = 85, "警告阈值" = 60 }
+# 是否启用自动分级
+auto_grading = true
+# 是否启用质量跟踪
+quality_tracking = true
+# 是否启用趋势分析
+trend_analysis = true
+# 趋势分析周期（天）
+trend_analysis_period = 7
+
+[feedback]
+# 反馈配置
+# 反馈格式: detailed, concise, bullet_points
+feedback_format = "detailed"
+# 是否包含具体示例
+include_examples = true
+# 是否包含修改建议
+include_suggestions = true
+# 是否包含改进方向
+include_improvement_directions = true
+# 是否包含鼓励性语言
+include_encouragement = true
+# 反馈详细程度: low, medium, high
+feedback_detail_level = "high"
+
+[validation]
+# 验证配置
+# 是否启用内容验证
+enabled = true
+# 验证规则
+validation_rules = ["内容安全性检查", "政治敏感性检查", "道德伦理检查", "版权合规性检查", "事实准确性检查"]
+# 是否启用自动标记
+auto_flagging = true
+# 标记级别
+flagging_levels = ["信息", "警告", "严重", "禁止"]
+
+[performance]
+# 性能配置
+# 是否启用评估缓存
+evaluation_cache = true
+# 缓存过期时间（秒）
+cache_ttl = 1800
+# 最大并发评估任务
+max_concurrent_evaluations = 3
+# 评估超时时间（秒）
+evaluation_timeout = 120
+# 是否启用批量评估
+batch_evaluation = true
+# 批处理大小
+batch_size = 10
+
+[integration]
+# 集成配置
+# 是否与作家Agent集成
+integrate_with_writer = true
+# 是否与架构师Agent集成
+integrate_with_architect = true
+# 是否与压缩者Agent集成
+integrate_with_compressor = true
+# 集成数据格式
+integration_format = "json"
+
+[monitoring]
+# 监控配置
+# 是否启用审阅监控
+enabled = true
+# 监控指标
+metrics = ["评估准确率", "反馈质量", "问题检测率", "评估速度", "用户满意度"]
+# 监控频率（秒）
+monitoring_interval = 60
+# 是否记录评估历史
+log_evaluation_history = true
+# 是否记录质量趋势
+log_quality_trends = true

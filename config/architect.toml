@@ -1,0 +1,150 @@
+# AI小说生成系统 - 架构师Agent配置
+# 架构师Agent负责小说结构设计、章节规划和整体架构
+
+[agent]
+# Agent名称
+name = "architect"
+# Agent描述
+description = "小说架构师，负责设计小说结构、章节规划和整体架构"
+# Agent类型
+type = "architect"
+# Agent版本
+version = "1.0.0"
+# 是否启用
+enabled = true
+# 执行优先级（1-10，数字越小优先级越高）
+priority = 2
+
+[llm]
+# 大语言模型配置
+# 基础API URL
+base_url = "https://api.deepseek.com"
+# 模型名称
+model = "deepseek-chat"
+# 温度参数（0.0-2.0）
+temperature = 0.5
+# 最大token数
+max_tokens = 4096
+# Top-p采样参数
+top_p = 0.8
+# 频率惩罚
+frequency_penalty = 0.1
+# 存在惩罚
+presence_penalty = 0.1
+# 停止标记
+stop = ["\n\n", "###", "章节", "结构"]
+
+[system_prompt]
+# 系统提示词
+content = """
+你是一个专业的小说架构师。你的职责包括：
+1. 根据用户需求设计完整的小说结构
+2. 规划章节划分和情节发展
+3. 设计角色关系和成长弧线
+4. 构建世界观和背景设定
+5. 确保故事结构的逻辑性和连贯性
+6. 提供多种结构方案供用户选择
+
+你需要具备：
+- 深厚的文学理论知识
+- 对各类小说体裁的深刻理解
+- 出色的结构设计能力
+- 严谨的逻辑思维能力
+
+请使用中文输出结构化的设计方案。
+"""
+
+[capabilities]
+# Agent能力配置
+# 是否支持多种小说体裁
+multiple_genres = true
+# 支持的小说体裁
+supported_genres = ["玄幻", "仙侠", "武侠", "都市", "科幻", "悬疑", "历史", "言情", "奇幻", "军事"]
+# 是否支持复杂结构设计
+complex_structure_design = true
+# 最大章节数
+max_chapters = 100
+# 是否支持多线叙事
+multi_thread_narrative = true
+# 是否支持角色关系图
+character_relationship_graph = true
+# 是否支持时间线设计
+timeline_design = true
+
+[structure]
+# 结构设计配置
+# 默认章节数
+default_chapters = 30
+# 章节长度范围（字）
+chapter_length_range = [2000, 5000]
+# 是否启用三幕结构
+three_act_structure = true
+# 是否启用英雄之旅模型
+hero_journey_model = true
+# 是否启用节拍表
+beat_sheet = true
+# 结构复杂度级别: simple, medium, complex
+complexity_level = "medium"
+
+[output]
+# 输出配置
+# 输出格式: json, markdown, yaml
+format = "json"
+# 是否包含详细大纲
+include_detailed_outline = true
+# 是否包含角色档案
+include_character_profiles = true
+# 是否包含世界观设定
+include_worldbuilding = true
+# 是否包含章节摘要
+include_chapter_summaries = true
+# 是否包含情节曲线图
+include_plot_curve = true
+
+[templates]
+# 模板配置
+# 是否启用模板库
+template_library = true
+# 默认模板
+default_template = "standard"
+# 可用模板
+available_templates = [
+    "standard",
+    "hero_journey",
+    "three_act",
+    "serial",
+    "episodic",
+]
+
+[validation]
+# 验证配置
+# 是否启用结构验证
+enabled = true
+# 验证规则
+rules = ["章节数量合理", "情节发展连贯", "角色成长合理", "冲突设置恰当", "结局符合预期"]
+# 是否启用一致性检查
+consistency_check = true
+# 是否启用逻辑检查
+logic_check = true
+
+[performance]
+# 性能配置
+# 缓存设计方案
+cache_designs = true
+# 缓存过期时间（秒）
+cache_ttl = 7200
+# 最大并发设计任务
+max_concurrent_designs = 2
+# 设计超时时间（秒）
+design_timeout = 600
+
+[integration]
+# 集成配置
+# 是否与作家Agent集成
+integrate_with_writer = true
+# 是否与审阅员Agent集成
+integrate_with_reviewer = true
+# 是否与数据维护员Agent集成
+integrate_with_data_keeper = true
+# 集成数据格式
+integration_format = "json"

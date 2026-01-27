@@ -1,0 +1,141 @@
+# AI小说生成系统 - 数据库配置
+# 数据库连接和存储设置
+
+[database]
+# 数据库类型: postgresql, mysql, sqlite, mongodb
+type = "postgresql"
+# 数据库主机
+host = "localhost"
+# 数据库端口
+port = 5432
+# 数据库名称
+name = "novelcraft"
+# 数据库用户名
+username = "novelcraft_user"
+# 数据库密码
+password = "your_password_here"
+# 连接池最大连接数
+pool_max = 20
+# 连接池最小连接数
+pool_min = 5
+# 连接超时时间（秒）
+connect_timeout = 10
+# 是否启用SSL
+ssl = false
+
+[postgresql]
+# PostgreSQL特定配置
+# 模式名称
+schema = "public"
+# 时区
+timezone = "Asia/Shanghai"
+# 字符编码
+encoding = "UTF8"
+# 是否启用连接保持
+keepalive = true
+# 连接保持间隔（秒）
+keepalive_interval = 60
+
+[mysql]
+# MySQL特定配置
+# 字符集
+charset = "utf8mb4"
+# 排序规则
+collation = "utf8mb4_unicode_ci"
+# 时区
+timezone = "+08:00"
+# 是否启用本地文件加载
+local_infile = false
+
+[sqlite]
+# SQLite特定配置
+# 数据库文件路径
+path = "./data/novelcraft.db"
+# 是否启用外键约束
+foreign_keys = true
+# 是否启用WAL模式
+journal_mode = "WAL"
+# 同步模式: OFF, NORMAL, FULL
+synchronous = "NORMAL"
+# 缓存大小（KB）
+cache_size = -2000
+
+[mongodb]
+# MongoDB特定配置
+# 连接字符串
+connection_string = "mongodb://localhost:27017"
+# 数据库名称
+db_name = "novelcraft"
+# 是否启用副本集
+replica_set = false
+# 是否启用SSL
+ssl_enabled = false
+# 认证数据库
+auth_source = "admin"
+
+[tables]
+# 数据库表配置
+users_table = "users"
+novels_table = "novels"
+chapters_table = "chapters"
+characters_table = "characters"
+settings_table = "settings"
+history_table = "generation_history"
+prompts_table = "prompt_templates"
+
+[indexes]
+# 索引配置
+# 是否启用自动索引创建
+auto_create_indexes = true
+# 索引刷新间隔（秒）
+index_refresh_interval = 300
+
+[migrations]
+# 数据库迁移配置
+# 迁移文件目录
+directory = "./migrations"
+# 迁移表名称
+table = "migrations"
+# 是否启用自动迁移
+auto_migrate = false
+# 迁移超时时间（秒）
+timeout = 300
+
+[backup]
+# 数据库备份配置
+# 是否启用自动备份
+enabled = true
+# 备份目录
+directory = "./backups"
+# 备份保留天数
+retention_days = 30
+# 备份时间间隔（小时）
+interval_hours = 24
+# 备份文件格式
+format = "sql"
+
+[performance]
+# 性能优化配置
+# 查询超时时间（秒）
+query_timeout = 30
+# 最大查询结果行数
+max_rows = 10000
+# 是否启用查询缓存
+query_cache = true
+# 查询缓存大小（MB）
+cache_size_mb = 100
+# 是否启用慢查询日志
+slow_query_log = true
+# 慢查询阈值（秒）
+slow_query_threshold = 1.0
+
+[monitoring]
+# 数据库监控配置
+# 是否启用监控
+enabled = true
+# 监控指标收集间隔（秒）
+collection_interval = 60
+# 是否启用连接池监控
+pool_monitoring = true
+# 是否启用查询性能监控
+query_performance_monitoring = true

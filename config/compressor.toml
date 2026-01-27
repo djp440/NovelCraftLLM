@@ -1,0 +1,189 @@
+# AI小说生成系统 - 压缩者Agent配置
+# 压缩者Agent负责内容压缩、摘要生成和优化
+
+[agent]
+# Agent名称
+name = "compressor"
+# Agent描述
+description = "内容压缩者，负责内容压缩、摘要生成和优化"
+# Agent类型
+type = "compressor"
+# Agent版本
+version = "1.0.0"
+# 是否启用
+enabled = true
+# 执行优先级（1-10，数字越小优先级越高）
+priority = 6
+
+[llm]
+# 大语言模型配置
+# 基础API URL
+base_url = "https://api.deepseek.com"
+# 模型名称
+model = "deepseek-chat"
+# 温度参数（0.0-2.0）
+temperature = 0.3
+# 最大token数
+max_tokens = 4096
+# Top-p采样参数
+top_p = 0.7
+# 频率惩罚
+frequency_penalty = 0.0
+# 存在惩罚
+presence_penalty = 0.0
+# 停止标记
+stop = ["\n\n", "###", "摘要", "压缩"]
+
+[system_prompt]
+# 系统提示词
+content = """
+你是一个专业的内容压缩者。你的职责包括：
+1. 对长篇内容进行智能压缩和摘要
+2. 保持原文的核心信息和关键情节
+3. 优化表达方式，提高信息密度
+4. 生成不同长度的摘要版本
+5. 提取关键信息和核心观点
+6. 保持原文的风格和语气
+
+你需要具备：
+- 出色的信息提取和归纳能力
+- 精准的语言表达能力
+- 对内容结构的深刻理解
+- 高效的压缩算法思维
+- 保持原文精髓的敏感性
+
+请使用中文进行内容压缩和摘要。
+"""
+
+[capabilities]
+# Agent能力配置
+# 是否支持多级压缩
+multi_level_compression = true
+# 压缩级别
+compression_levels = ["轻度", "中度", "重度", "极限"]
+# 是否支持摘要生成
+summarization = true
+# 是否支持关键信息提取
+key_information_extraction = true
+# 是否支持内容优化
+content_optimization = true
+# 是否支持格式转换
+format_conversion = true
+# 是否支持质量保持
+quality_preservation = true
+
+[compression]
+# 压缩配置
+# 默认压缩比例
+default_compression_ratio = 0.5
+# 压缩比例范围
+compression_ratio_range = [0.1, 0.9]
+# 是否启用智能压缩
+smart_compression = true
+# 是否保持关键信息
+preserve_key_information = true
+# 是否保持原文风格
+preserve_original_style = true
+# 是否保持情感色彩
+preserve_emotional_tone = true
+# 压缩算法
+compression_algorithms = ["提取式", "抽象式", "混合式"]
+
+[summarization]
+# 摘要配置
+# 摘要类型
+summary_types = ["执行摘要", "详细摘要", "关键点摘要", "章节摘要"]
+# 默认摘要长度（字）
+default_summary_length = 500
+# 摘要长度范围（字）
+summary_length_range = [100, 2000]
+# 是否启用多版本摘要
+multi_version_summaries = true
+# 版本数量
+version_count = 3
+# 是否包含情感分析
+include_sentiment_analysis = true
+# 是否包含关键词提取
+include_keyword_extraction = true
+
+[optimization]
+# 优化配置
+# 优化目标
+optimization_goals = ["可读性", "简洁性", "信息密度", "表达效果"]
+# 是否启用语言优化
+language_optimization = true
+# 是否启用结构优化
+structure_optimization = true
+# 是否启用逻辑优化
+logic_optimization = true
+# 优化级别: low, medium, high
+optimization_level = "medium"
+# 是否保持原文含义
+preserve_original_meaning = true
+
+[quality]
+# 质量配置
+# 质量评估标准
+quality_criteria = ["信息完整性", "表达准确性", "逻辑连贯性", "可读性", "压缩效率"]
+# 最低质量分数（0-100）
+min_quality_score = 75
+# 是否启用质量检查
+quality_check = true
+# 是否启用自动优化
+auto_optimization = true
+# 优化最大次数
+max_optimization_attempts = 3
+
+[output]
+# 输出配置
+# 输出格式: text, markdown, json
+format = "json"
+# 是否包含原始内容引用
+include_original_references = true
+# 是否包含压缩统计信息
+include_compression_stats = true
+# 是否包含质量评分
+include_quality_scores = true
+# 是否包含优化建议
+include_optimization_suggestions = true
+# 是否包含版本比较
+include_version_comparison = true
+
+[performance]
+# 性能配置
+# 是否启用缓存
+caching_enabled = true
+# 缓存过期时间（秒）
+cache_ttl = 3600
+# 最大并发压缩任务
+max_concurrent_compressions = 4
+# 压缩超时时间（秒）
+compression_timeout = 180
+# 是否启用批量处理
+batch_processing = true
+# 批处理大小
+batch_size = 8
+
+[integration]
+# 集成配置
+# 是否与作家Agent集成
+integrate_with_writer = true
+# 是否与审阅员Agent集成
+integrate_with_reviewer = true
+# 是否与数据维护员Agent集成
+integrate_with_data_keeper = true
+# 集成数据格式
+integration_format = "json"
+
+[monitoring]
+# 监控配置
+# 是否启用压缩监控
+enabled = true
+# 监控指标
+metrics = ["压缩速度", "压缩比例", "信息保留率", "质量评分", "处理效率"]
+# 监控频率（秒）
+monitoring_interval = 60
+# 是否记录压缩历史
+log_compression_history = true
+# 是否记录性能指标
+log_performance_metrics = true

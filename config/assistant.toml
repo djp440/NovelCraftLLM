@@ -1,0 +1,131 @@
+# AI小说生成系统 - 助理Agent配置
+# 助理Agent负责用户交互、任务协调和初步需求分析
+
+[agent]
+# Agent名称
+name = "assistant"
+# Agent描述
+description = "用户交互助理，负责协调任务和初步需求分析"
+# Agent类型
+type = "assistant"
+# Agent版本
+version = "1.0.0"
+# 是否启用
+enabled = true
+# 执行优先级（1-10，数字越小优先级越高）
+priority = 1
+
+[llm]
+# 大语言模型配置
+# 基础API URL
+base_url = "https://api.deepseek.com"
+# 模型名称
+model = "deepseek-chat"
+# 温度参数（0.0-2.0）
+temperature = 0.7
+# 最大token数
+max_tokens = 4096
+# Top-p采样参数
+top_p = 0.9
+# 频率惩罚
+frequency_penalty = 0.0
+# 存在惩罚
+presence_penalty = 0.0
+# 停止标记
+stop = ["\n\n", "###", "用户:", "助理:"]
+
+[system_prompt]
+# 系统提示词
+content = """
+你是一个专业的AI小说创作助理。你的职责包括：
+1. 与用户进行友好、专业的对话，理解他们的创作需求
+2. 收集小说创作的关键信息：题材、风格、角色、情节等
+3. 将用户需求整理成结构化的创作大纲
+4. 协调其他Agent（架构师、作家等）的工作流程
+5. 提供创作建议和灵感启发
+
+请保持热情、专业的态度，积极引导用户表达创作想法。
+使用中文进行交流，除非用户明确要求使用其他语言。
+"""
+
+[capabilities]
+# Agent能力配置
+# 是否支持多轮对话
+multi_turn_dialogue = true
+# 是否支持上下文记忆
+context_memory = true
+# 记忆窗口大小（对话轮数）
+memory_window = 10
+# 是否支持情感分析
+sentiment_analysis = true
+# 是否支持意图识别
+intent_recognition = true
+# 是否支持需求提取
+requirement_extraction = true
+
+[interaction]
+# 交互配置
+# 最大对话轮数
+max_turns = 20
+# 响应超时时间（秒）
+response_timeout = 30
+# 是否启用打字机效果
+typing_effect = true
+# 打字速度（字符/秒）
+typing_speed = 20
+# 是否启用表情符号
+emojis_enabled = true
+# 是否启用语音反馈
+voice_feedback = false
+
+[workflow]
+# 工作流配置
+# 是否启用自动任务分配
+auto_task_allocation = true
+# 是否启用进度跟踪
+progress_tracking = true
+# 是否启用异常处理
+exception_handling = true
+# 最大并发任务数
+max_concurrent_tasks = 3
+# 任务超时时间（秒）
+task_timeout = 300
+
+[output]
+# 输出配置
+# 输出格式: json, text, markdown
+format = "json"
+# 是否包含结构化数据
+include_structured_data = true
+# 是否包含原始对话
+include_raw_dialogue = false
+# 是否启用摘要生成
+summary_enabled = true
+# 摘要最大长度
+summary_max_length = 500
+
+[performance]
+# 性能配置
+# 缓存响应
+cache_responses = true
+# 缓存过期时间（秒）
+cache_ttl = 3600
+# 是否启用响应压缩
+response_compression = true
+# 是否启用批处理
+batch_processing = false
+# 批处理大小
+batch_size = 10
+
+[monitoring]
+# 监控配置
+# 是否启用性能监控
+enabled = true
+# 监控指标收集间隔（秒）
+collection_interval = 60
+# 是否记录对话历史
+log_conversations = true
+# 是否记录错误
+log_errors = true
+# 是否记录性能指标
+log_performance = true
