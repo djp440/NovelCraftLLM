@@ -27,8 +27,10 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "better-sqlite3": "^12.6.2",
     "dotenv": "^17.2.3",
+    "jsonwebtoken": "^9.0.3",
     "kysely": "^0.28.10",
     "next": "^14.2.35",
     "openai": "^6.16.0",
@@ -38,7 +40,9 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/better-sqlite3": "^7.6.13",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",

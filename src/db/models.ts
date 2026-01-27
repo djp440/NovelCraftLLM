@@ -36,7 +36,7 @@ export class UserModel {
             .values(user)
             .returningAll()
             .executeTakeFirstOrThrow();
-        return result;
+        return result as User;
     }
 
     /**
@@ -49,7 +49,7 @@ export class UserModel {
             .where('id', '=', id)
             .selectAll()
             .executeTakeFirst();
-        return user ?? null;
+        return (user ?? null) as User | null;
     }
 
     /**
@@ -62,7 +62,7 @@ export class UserModel {
             .where('username', '=', username)
             .selectAll()
             .executeTakeFirst();
-        return user ?? null;
+        return (user ?? null) as User | null;
     }
 
     /**
@@ -74,7 +74,7 @@ export class UserModel {
             .updateTable('users')
             .set({
                 ...updates,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date(),
             })
             .where('id', '=', id)
             .returningAll()
@@ -87,7 +87,7 @@ export class UserModel {
      */
     static async updateLastLogin(id: number): Promise<void> {
         const db = getDb();
-        const now = new Date().toISOString();
+        const now = new Date();
         await db
             .updateTable('users')
             .set({
@@ -96,6 +96,82 @@ export class UserModel {
             })
             .where('id', '=', id)
             .execute();
+    }
+
+    /**
+     * 更新用户认证方式为Passkey
+     * @param id 用户ID
+     * @param credential Passkey凭证JSON字符串
+     */
+    static async updateToPasskeyAuth(id: number, credential: string): Promise<void> {
+        const db = getDb();
+        const now = new Date();
+        await db
+            .updateTable('users')
+            .set({
+                auth_method: 'passkey',
+                passkey_credential: credential,
+                updated_at: now,
+            })
+            .where('id', '=', id)
+            .execute();
+    }
+
+    /**
+     * 更新用户认证方式为密码
+     * @param id 用户ID
+     */
+    static async updateToPasswordAuth(id: number): Promise<void> {
+        const db = getDb();
+        const now = new Date();
+        await db
+            .updateTable('users')
+            .set({
+                auth_method: 'password',
+                passkey_credential: null,
+                updated_at: now,
+            })
+            .where('id', '=', id)
+            .execute();
+    }
+
+    /**
+     * 检查用户是否使用Passkey认证
+     * @param id 用户ID
+     * @returns 是否使用Passkey认证
+     */
+    static async usesPasskeyAuth(id: number): Promise<boolean> {
+        const user = await this.findById(id);
+        return user?.auth_method === 'passkey' && !!user.passkey_credential;
+    }
+
+    /**
+     * 获取用户的Passkey凭证
+     * @param id 用户ID
+     * @returns Passkey凭证JSON字符串或null
+     */
+    static async getPasskeyCredential(id: number): Promise<string | null> {
+        const user = await this.findById(id);
+        return user?.passkey_credential ?? null;
+    }
+
+    /**
+     * 根据Passkey凭证ID查找用户
+     * @param credentialId Passkey凭证ID
+     * @returns 用户或null
+     */
+    static async findByCredentialId(credentialId: string): Promise<User | null> {
+        const db = getDb();
+        // 注意：这里需要解析passkey_credential字段来查找匹配的凭证ID
+        // 由于passkey_credential存储的是JSON字符串，这里使用简单的LIKE查询
+        // 实际实现中应该使用更精确的JSON查询
+        const user = await db
+            .selectFrom('users')
+            .where('passkey_credential', 'like', `%"id":"${credentialId}"%`)
+            .selectAll()
+            .executeTakeFirst();
+
+        return (user ?? null) as User | null;
     }
 }
 
@@ -153,7 +229,7 @@ export class ProjectModel {
             .updateTable('projects')
             .set({
                 ...updates,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date(),
             })
             .where('id', '=', id)
             .where('deleted_at', 'is', null)
@@ -167,11 +243,12 @@ export class ProjectModel {
      */
     static async softDelete(id: number): Promise<void> {
         const db = getDb();
+        const now = new Date();
         await db
             .updateTable('projects')
             .set({
-                deleted_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                deleted_at: now,
+                updated_at: now,
             })
             .where('id', '=', id)
             .execute();
@@ -186,7 +263,7 @@ export class ProjectModel {
             .updateTable('projects')
             .set({
                 deleted_at: null,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date(),
             })
             .where('id', '=', id)
             .execute();
@@ -247,7 +324,7 @@ export class ChapterModel {
             .updateTable('chapters')
             .set({
                 ...updates,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date().toISOString().toISOString(),
             })
             .where('id', '=', id)
             .where('deleted_at', 'is', null)
@@ -266,7 +343,7 @@ export class ChapterModel {
             .updateTable('chapters')
             .set({
                 word_count: wordCount,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date().toISOString().toISOString(),
             })
             .where('id', '=', id)
             .execute();
@@ -280,8 +357,8 @@ export class ChapterModel {
         await db
             .updateTable('chapters')
             .set({
-                deleted_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                deleted_at: new Date().toISOString().toISOString(),
+                updated_at: new Date().toISOString().toISOString(),
             })
             .where('id', '=', id)
             .execute();
@@ -370,7 +447,7 @@ export class WorldBookModel {
             .updateTable('world_books')
             .set({
                 ...worldBook,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date().toISOString().toISOString(),
             })
             .where('project_id', '=', worldBook.project_id)
             .returningAll()
@@ -457,7 +534,7 @@ export class CharacterModel {
             .updateTable('characters')
             .set({
                 ...updates,
-                updated_at: new Date().toISOString(),
+                updated_at: new Date().toISOString().toISOString(),
             })
             .where('id', '=', id)
             .where('deleted_at', 'is', null)
@@ -474,8 +551,8 @@ export class CharacterModel {
         await db
             .updateTable('characters')
             .set({
-                deleted_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                deleted_at: new Date().toISOString().toISOString(),
+                updated_at: new Date().toISOString().toISOString(),
             })
             .where('id', '=', id)
             .execute();
