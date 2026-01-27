@@ -2,7 +2,6 @@
  * 认证工具函数
  */
 
-import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { JwtPayload } from './types';
 
@@ -15,6 +14,7 @@ const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || '12');
  * 生成密码哈希
  */
 export async function hashPassword(password: string): Promise<string> {
+    const bcrypt = await import('bcrypt');
     return bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
 }
 
@@ -22,6 +22,7 @@ export async function hashPassword(password: string): Promise<string> {
  * 验证密码
  */
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+    const bcrypt = await import('bcrypt');
     return bcrypt.compare(password, hash);
 }
 
@@ -35,9 +36,9 @@ export function generateToken(userId: number, username: string, authMethod: stri
         authMethod,
     };
 
-    return jwt.sign(payload, JWT_SECRET, {
+    return jwt.sign(payload, JWT_SECRET as jwt.Secret, {
         expiresIn: JWT_EXPIRES_IN,
-    });
+    } as jwt.SignOptions);
 }
 
 /**

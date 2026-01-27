@@ -74,7 +74,7 @@ export class UserModel {
             .updateTable('users')
             .set({
                 ...updates,
-                updated_at: new Date(),
+                updated_at: new Date().toISOString(),
             })
             .where('id', '=', id)
             .returningAll()
@@ -87,7 +87,7 @@ export class UserModel {
      */
     static async updateLastLogin(id: number): Promise<void> {
         const db = getDb();
-        const now = new Date();
+        const now = new Date().toISOString();
         await db
             .updateTable('users')
             .set({
@@ -105,7 +105,7 @@ export class UserModel {
      */
     static async updateToPasskeyAuth(id: number, credential: string): Promise<void> {
         const db = getDb();
-        const now = new Date();
+        const now = new Date().toISOString();
         await db
             .updateTable('users')
             .set({
@@ -123,7 +123,7 @@ export class UserModel {
      */
     static async updateToPasswordAuth(id: number): Promise<void> {
         const db = getDb();
-        const now = new Date();
+        const now = new Date().toISOString();
         await db
             .updateTable('users')
             .set({
@@ -229,7 +229,7 @@ export class ProjectModel {
             .updateTable('projects')
             .set({
                 ...updates,
-                updated_at: new Date(),
+                updated_at: new Date().toISOString(),
             })
             .where('id', '=', id)
             .where('deleted_at', 'is', null)
@@ -244,11 +244,13 @@ export class ProjectModel {
     static async softDelete(id: number): Promise<void> {
         const db = getDb();
         const now = new Date();
+        // 使用字符串格式的日期，避免SQLite绑定问题
+        const nowStr = now.toISOString();
         await db
             .updateTable('projects')
             .set({
-                deleted_at: now,
-                updated_at: now,
+                deleted_at: nowStr,
+                updated_at: nowStr,
             })
             .where('id', '=', id)
             .execute();
@@ -263,7 +265,7 @@ export class ProjectModel {
             .updateTable('projects')
             .set({
                 deleted_at: null,
-                updated_at: new Date(),
+                updated_at: new Date().toISOString(),
             })
             .where('id', '=', id)
             .execute();
@@ -309,6 +311,7 @@ export class ChapterModel {
             .selectFrom('chapters')
             .where('project_id', '=', projectId)
             .where('deleted_at', 'is', null)
+            .orderBy('order_index', 'asc')
             .orderBy('created_at', 'asc')
             .selectAll()
             .execute();
@@ -324,7 +327,7 @@ export class ChapterModel {
             .updateTable('chapters')
             .set({
                 ...updates,
-                updated_at: new Date().toISOString().toISOString(),
+                updated_at: new Date().toISOString(),
             })
             .where('id', '=', id)
             .where('deleted_at', 'is', null)
@@ -343,7 +346,7 @@ export class ChapterModel {
             .updateTable('chapters')
             .set({
                 word_count: wordCount,
-                updated_at: new Date().toISOString().toISOString(),
+                updated_at: new Date().toISOString(),
             })
             .where('id', '=', id)
             .execute();
@@ -354,11 +357,12 @@ export class ChapterModel {
      */
     static async softDelete(id: number): Promise<void> {
         const db = getDb();
+        const now = new Date().toISOString();
         await db
             .updateTable('chapters')
             .set({
-                deleted_at: new Date().toISOString().toISOString(),
-                updated_at: new Date().toISOString().toISOString(),
+                deleted_at: now,
+                updated_at: now,
             })
             .where('id', '=', id)
             .execute();
@@ -424,10 +428,12 @@ export class ChapterVersionModel {
             .where(
                 'version_number',
                 '=',
-                db
+                (eb) => eb
                     .selectFrom('chapter_versions')
                     .where('chapter_id', '=', chapterId)
-                    .select(sql`MIN(version_number)`.as('min_version'))
+                    .select('version_number')
+                    .orderBy('version_number', 'asc')
+                    .limit(1)
             )
             .execute();
     }
@@ -447,7 +453,7 @@ export class WorldBookModel {
             .updateTable('world_books')
             .set({
                 ...worldBook,
-                updated_at: new Date().toISOString().toISOString(),
+                updated_at: new Date().toISOString(),
             })
             .where('project_id', '=', worldBook.project_id)
             .returningAll()
@@ -534,7 +540,7 @@ export class CharacterModel {
             .updateTable('characters')
             .set({
                 ...updates,
-                updated_at: new Date().toISOString().toISOString(),
+                updated_at: new Date().toISOString(),
             })
             .where('id', '=', id)
             .where('deleted_at', 'is', null)
@@ -548,11 +554,12 @@ export class CharacterModel {
      */
     static async softDelete(id: number): Promise<void> {
         const db = getDb();
+        const now = new Date().toISOString();
         await db
             .updateTable('characters')
             .set({
-                deleted_at: new Date().toISOString().toISOString(),
-                updated_at: new Date().toISOString().toISOString(),
+                deleted_at: now,
+                updated_at: now,
             })
             .where('id', '=', id)
             .execute();

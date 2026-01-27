@@ -50,11 +50,29 @@ export default function LoginPage() {
         }
     };
 
-    const handleDemoLogin = () => {
-        // 演示用：设置一个模拟令牌并重定向
-        const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiZGVtb0BleGFtcGxlLmNvbSIsImF1dGhNZXRob2QiOiJwYXNzd29yZCIsImlhdCI6MTcwNjM0NTYwMCwiZXhwIjoxNzA2OTUwNDAwfQ.mock-token-for-demo-only';
-        document.cookie = `token=${mockToken}; path=/; max-age=86400`;
-        window.location.href = redirect;
+    const handleDemoLogin = async () => {
+        setIsLoading(true);
+        setError('');
+
+        try {
+            // 调用演示登录API获取真实Token
+            const response = await fetch('/api/auth/demo', {
+                method: 'POST',
+            });
+            const data = await response.json();
+
+            if (data.success && data.token) {
+                document.cookie = `token=${data.token}; path=/; max-age=86400`;
+                window.location.href = redirect;
+            } else {
+                setError(data.message || '演示登录失败');
+            }
+        } catch (err) {
+            setError('网络错误，请稍后重试');
+            console.error('演示登录错误:', err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handlePasskeyLogin = async () => {

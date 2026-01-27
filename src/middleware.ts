@@ -14,7 +14,7 @@ import { verifyToken } from './auth/utils';
 import { JwtPayload } from './auth/types';
 
 // 需要保护的路由前缀
-const PROTECTED_PREFIXES = ['/workbench'];
+const PROTECTED_PREFIXES = ['/workbench', '/api'];
 
 // 公开路由（不需要认证）
 const PUBLIC_ROUTES = [
@@ -24,6 +24,9 @@ const PUBLIC_ROUTES = [
     '/api/auth/login',
     '/api/auth/register',
     '/api/auth/logout',
+    '/api/auth/demo',
+    '/api/auth/passkey/status',
+    '/api/auth/passkey/authenticate',
 ];
 
 /**
@@ -82,6 +85,9 @@ export function middleware(request: NextRequest) {
     // 检查是否需要保护该路径
     if (!isProtectedPath(pathname)) {
         // 公开路由，直接放行
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`[Middleware] 公开路由放行: ${pathname}`);
+        }
         return NextResponse.next();
     }
 
@@ -111,16 +117,20 @@ export function middleware(request: NextRequest) {
 
     // 令牌验证成功，允许访问
     if (process.env.NODE_ENV === 'development') {
-        console.log(`[Middleware] JWT验证成功，用户: ${payload.username}, 路径: ${pathname}`);
+        console.log(`[Middleware] JWT验证成功，用户: ${payload.username}, 路径: ${pathname}, 设置 x-user-id: ${payload.userId}`);
     }
 
     // 可以在这里添加额外的请求头或修改请求
-    const response = NextResponse.next();
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-user-id', payload.userId.toString());
+    requestHeaders.set('x-username', payload.username);
+    requestHeaders.set('x-auth-method', payload.authMethod);
 
-    // 可选：将用户信息添加到请求头，供后续处理程序使用
-    response.headers.set('x-user-id', payload.userId.toString());
-    response.headers.set('x-username', payload.username);
-    response.headers.set('x-auth-method', payload.authMethod);
+    const response = NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+    });
 
     return response;
 }

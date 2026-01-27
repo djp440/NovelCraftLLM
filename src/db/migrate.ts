@@ -61,7 +61,7 @@ export class MigrationManager {
     private static async getAppliedMigrations(): Promise<Set<string>> {
         const db = getDb();
         const migrations = await db
-            .selectFrom(this.migrationTableName)
+            .selectFrom(this.migrationTableName as any)
             .select('name')
             .execute();
 
@@ -115,7 +115,7 @@ export class MigrationManager {
     private static async recordMigration(name: string) {
         const db = getDb();
         await db
-            .insertInto(this.migrationTableName)
+            .insertInto(this.migrationTableName as any)
             .values({ name })
             .execute();
     }

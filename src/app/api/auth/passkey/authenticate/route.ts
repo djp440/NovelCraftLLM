@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
                 id: user.id,
                 username: user.username,
                 auth_method: 'passkey',
-                last_login_at: user.last_login_at?.toISOString(),
+                last_login_at: user.last_login_at ?? undefined,
             },
         });
 

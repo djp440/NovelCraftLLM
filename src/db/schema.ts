@@ -13,9 +13,9 @@ export interface UsersTable {
     password_hash: string;
     auth_method: 'password' | 'passkey';
     passkey_credential: string | null;
-    last_login_at: Date | null;
-    created_at: Generated<Date>;
-    updated_at: Generated<Date>;
+    last_login_at: string | null;
+    created_at: Generated<string>;
+    updated_at: Generated<string>;
 }
 
 export interface ProjectsTable {
@@ -23,11 +23,12 @@ export interface ProjectsTable {
     user_id: number;
     title: string;
     description: string | null;
+    cover_image: string | null;
     status: 'active' | 'archived';
     current_chapter_id: number | null;
-    created_at: Generated<Date>;
-    updated_at: Generated<Date>;
-    deleted_at: Date | null;
+    created_at: Generated<string>;
+    updated_at: Generated<string>;
+    deleted_at: string | null;
 }
 
 export interface ChaptersTable {
@@ -38,9 +39,12 @@ export interface ChaptersTable {
     version_seq: Generated<number>;
     word_count: Generated<number>;
     agent_trace: string | null;
-    created_at: Generated<Date>;
-    updated_at: Generated<Date>;
-    deleted_at: Date | null;
+    parent_id: number | null;
+    order_index: Generated<number>;
+    type: Generated<'volume' | 'chapter'>;
+    created_at: Generated<string>;
+    updated_at: Generated<string>;
+    deleted_at: string | null;
 }
 
 export interface ChapterVersionsTable {
@@ -49,7 +53,7 @@ export interface ChapterVersionsTable {
     version_number: number;
     content: string;
     created_by_agent: string | null;
-    created_at: Generated<Date>;
+    created_at: Generated<string>;
 }
 
 export interface WorldBooksTable {
@@ -57,8 +61,8 @@ export interface WorldBooksTable {
     project_id: number;
     content: string;
     outline: string | null;
-    created_at: Generated<Date>;
-    updated_at: Generated<Date>;
+    created_at: Generated<string>;
+    updated_at: Generated<string>;
 }
 
 export interface CharactersTable {
@@ -69,9 +73,9 @@ export interface CharactersTable {
     description: string;
     avatar_url: string | null;
     tags: string | null;
-    created_at: Generated<Date>;
-    updated_at: Generated<Date>;
-    deleted_at: Date | null;
+    created_at: Generated<string>;
+    updated_at: Generated<string>;
+    deleted_at: string | null;
 }
 
 // ==================== 数据库模式 ====================

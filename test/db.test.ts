@@ -394,6 +394,7 @@ async function testForeignKeyConstraints() {
                 user_id: 999999, // 不存在的用户ID
                 title: '无效项目',
                 description: '这个应该失败',
+                status: 'active',
             })
             .execute();
 
