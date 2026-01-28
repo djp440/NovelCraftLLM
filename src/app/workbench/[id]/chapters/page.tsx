@@ -39,7 +39,7 @@ export default function ChaptersPage() {
             setVolumes(data.volumes || []);
             setLooseChapters(data.chapters || []);
         } catch (error) {
-            console.error('Failed to load chapters:', error);
+            console.error('加载章节失败:', error);
         } finally {
             setLoading(false);
         }
@@ -60,9 +60,10 @@ export default function ChaptersPage() {
             setNewItemTitle('');
             setShowCreateModal(false);
             loadChapters(id);
-        } catch (error: any) {
-            console.error('Failed to create:', error);
-            alert(`创建失败: ${error.message}`);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.error('创建失败:', error);
+            alert(`创建失败: ${message}`);
         }
     };
 
@@ -76,9 +77,10 @@ export default function ChaptersPage() {
             setEditingItem(null);
             setNewItemTitle('');
             loadChapters(id);
-        } catch (error: any) {
-            console.error('Failed to update:', error);
-            alert(`更新失败: ${error.message}`);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.error('更新失败:', error);
+            alert(`更新失败: ${message}`);
         }
     };
 
@@ -93,9 +95,10 @@ export default function ChaptersPage() {
         try {
             await deleteChapter(id, itemToDelete);
             loadChapters(id);
-        } catch (error: any) {
-            console.error('Failed to delete:', error);
-            alert(`删除失败: ${error.message}`);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.error('删除失败:', error);
+            alert(`删除失败: ${message}`);
         } finally {
             setShowDeleteDialog(false);
             setItemToDelete(null);

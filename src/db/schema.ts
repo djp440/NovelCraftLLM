@@ -78,6 +78,12 @@ export interface CharactersTable {
     deleted_at: string | null;
 }
 
+export interface MigrationsTable {
+    id: Generated<number>;
+    name: string;
+    applied_at: Generated<string>;
+}
+
 // ==================== 数据库模式 ====================
 
 export interface DatabaseSchema {
@@ -87,6 +93,7 @@ export interface DatabaseSchema {
     chapter_versions: ChapterVersionsTable;
     world_books: WorldBooksTable;
     characters: CharactersTable;
+    migrations: MigrationsTable;
 }
 
 // ==================== 类型导出 ====================

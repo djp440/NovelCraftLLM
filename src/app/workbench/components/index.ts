@@ -11,6 +11,7 @@ export type {
     ProjectCardCallbacks,
     SidebarMenuItem,
     ConfirmDialogConfig,
+    InputDialogConfig,
     ProjectStatus
 } from './types';
 
@@ -20,6 +21,7 @@ export { default as ProjectCard } from './ProjectCard';
 export { default as ProjectList, ProjectListContainer } from './ProjectList';
 export { default as NewProjectModal, useNewProjectModal } from './NewProjectModal';
 export { default as ConfirmDialog, useConfirmDialog } from './ConfirmDialog';
+export { default as InputDialog, useInputDialog } from './InputDialog';
 
 // 工具函数导出
 export { fetchProjects, createProject, deleteProject, updateProject } from '../utils/api';

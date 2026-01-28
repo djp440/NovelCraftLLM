@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { Character, NewCharacterData } from '../../components/types';
 import { getCharacters, createCharacter, updateCharacter, deleteCharacter } from '../../utils/api';
@@ -42,7 +43,7 @@ export default function CharactersPage() {
             const data = await getCharacters(projectId);
             setCharacters(data);
         } catch (error) {
-            console.error('Failed to load characters:', error);
+            console.error('加载角色失败:', error);
         } finally {
             setLoading(false);
         }
@@ -64,9 +65,10 @@ export default function CharactersPage() {
             setShowModal(false);
             resetForm();
             loadCharacters(id);
-        } catch (error: any) {
-            console.error('Operation failed:', error);
-            alert(`操作失败: ${error.message}`);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.error('操作失败:', error);
+            alert(`操作失败: ${message}`);
         }
     };
 
@@ -80,9 +82,10 @@ export default function CharactersPage() {
         try {
             await deleteCharacter(id, itemToDelete);
             loadCharacters(id);
-        } catch (error: any) {
-            console.error('Delete failed:', error);
-            alert(`删除失败: ${error.message}`);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.error('删除失败:', error);
+            alert(`删除失败: ${message}`);
         } finally {
             setShowDeleteDialog(false);
             setItemToDelete(null);
@@ -152,7 +155,15 @@ export default function CharactersPage() {
                                 <div className="flex items-center space-x-3">
                                     <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-xl overflow-hidden">
                                         {char.avatar_url ? (
-                                            <img src={char.avatar_url} alt={char.name} className="w-full h-full object-cover" />
+                                            <Image
+                                                src={char.avatar_url}
+                                                alt={char.name}
+                                                width={48}
+                                                height={48}
+                                                className="w-full h-full object-cover"
+                                                unoptimized
+                                                loader={({ src }) => src}
+                                            />
                                         ) : (
                                             <span>{char.name[0]}</span>
                                         )}

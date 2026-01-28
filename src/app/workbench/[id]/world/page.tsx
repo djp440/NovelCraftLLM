@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { WorldBook } from '../../components/types';
 import { getWorldBook, upsertWorldBook } from '../../utils/api';
 
 export default function WorldBookPage() {
@@ -10,7 +9,6 @@ export default function WorldBookPage() {
     const router = useRouter();
     const id = typeof params.id === 'string' ? parseInt(params.id) : null;
 
-    const [worldBook, setWorldBook] = useState<WorldBook | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
@@ -28,7 +26,6 @@ export default function WorldBookPage() {
             setLoading(true);
             const data = await getWorldBook(projectId);
             if (data) {
-                setWorldBook(data);
                 setContent(data.content);
                 setOutlineJson(data.outline ? JSON.stringify(data.outline, null, 2) : '');
             }
@@ -46,7 +43,7 @@ export default function WorldBookPage() {
         if (outlineJson.trim()) {
             try {
                 outline = JSON.parse(outlineJson);
-            } catch (e) {
+            } catch {
                 alert('大纲配置必须是有效的 JSON 格式');
                 return;
             }
@@ -58,11 +55,12 @@ export default function WorldBookPage() {
                 content,
                 outline
             });
-            setWorldBook(result);
+            void result;
             alert('保存成功');
-        } catch (error: any) {
-            console.error('Save failed:', error);
-            alert(`保存失败: ${error.message}`);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.error('保存失败:', error);
+            alert(`保存失败: ${message}`);
         } finally {
             setSaving(false);
         }

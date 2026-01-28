@@ -1,10 +1,11 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { Models } from '@/db/models';
+import type { ProjectUpdate } from '@/db/schema';
 import { getAuthUser } from '@/app/api/auth-helper';
 
 // 响应类型定义
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
     success: boolean;
     message: string;
     data?: T;
@@ -200,7 +201,7 @@ export async function PUT(
         }
 
         // 更新项目
-        const updateData: any = {};
+        const updateData: ProjectUpdate = {};
         if (title) updateData.title = title.trim();
         if (description !== undefined) updateData.description = description?.trim() || null;
         if (cover_image !== undefined) updateData.cover_image = cover_image?.trim() || null;

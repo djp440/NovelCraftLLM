@@ -59,7 +59,8 @@ export class AgentManager {
                 this.getAgent(agentName);
             } catch (error) {
                 // 个别 Agent 初始化失败不影响整体
-                logger.warn('AgentManager', `预初始化 Agent 失败: ${agentName}`);
+                const message = error instanceof Error ? error.message : String(error);
+                logger.warn('AgentManager', `预初始化 Agent 失败: ${agentName}, ${message}`);
             }
         }
     }

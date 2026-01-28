@@ -6,6 +6,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Project, ProjectCardCallbacks } from './types';
 
 interface ProjectCardProps {
@@ -82,7 +83,12 @@ function formatDate(dateString: string): string {
 
 export default function ProjectCard({ project, callbacks, className = '' }: ProjectCardProps) {
     const [isHovered, setIsHovered] = useState(false);
+    const [coverLoadFailed, setCoverLoadFailed] = useState(false);
     const statusConfig = getStatusConfig(project.status);
+
+    React.useEffect(() => {
+        setCoverLoadFailed(false);
+    }, [project.cover_image]);
 
     const handleCardClick = () => {
         callbacks?.onViewDetails?.(project);
@@ -108,18 +114,19 @@ export default function ProjectCard({ project, callbacks, className = '' }: Proj
         >
             {/* 项目封面 */}
             <div className="h-40 w-full overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-900 relative">
-                {project.cover_image ? (
-                    <img
+                {project.cover_image && !coverLoadFailed ? (
+                    <Image
                         src={project.cover_image}
                         alt={project.title}
+                        width={1200}
+                        height={400}
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                            e.currentTarget.parentElement?.querySelector('.placeholder-icon')?.classList.remove('hidden');
-                        }}
+                        unoptimized
+                        loader={({ src }) => src}
+                        onError={() => setCoverLoadFailed(true)}
                     />
                 ) : null}
-                <div className={`w-full h-full flex items-center justify-center absolute top-0 left-0 placeholder-icon ${project.cover_image ? 'hidden' : ''}`}>
+                <div className={`w-full h-full flex items-center justify-center absolute top-0 left-0 placeholder-icon ${project.cover_image && !coverLoadFailed ? 'hidden' : ''}`}>
                     <div className="text-4xl text-gray-400 dark:text-gray-500">
                         📖
                     </div>

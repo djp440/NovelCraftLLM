@@ -17,7 +17,7 @@ export class PasskeyService {
      * @returns Passkey注册选项（预留接口）
      */
     static async generateRegistrationOptions(username: string): Promise<{
-        options: any;
+        options: Record<string, unknown>;
         challenge: string;
     }> {
         // 预留接口：未来实现WebAuthn注册选项生成
@@ -39,9 +39,11 @@ export class PasskeyService {
      */
     static async verifyRegistration(
         username: string,
-        credential: any,
-        challenge: string
+        _credential: unknown,
+        _challenge: string
     ): Promise<{ success: boolean; credentialId?: string }> {
+        void _credential;
+        void _challenge;
         // 预留接口：未来实现WebAuthn注册验证
         console.log(`[Passkey] 验证用户 ${username} 的注册响应`);
 
@@ -58,7 +60,7 @@ export class PasskeyService {
      * @returns Passkey认证选项（预留接口）
      */
     static async generateAuthenticationOptions(username: string): Promise<{
-        options: any;
+        options: Record<string, unknown>;
         challenge: string;
     }> {
         // 预留接口：未来实现WebAuthn认证选项生成
@@ -80,9 +82,11 @@ export class PasskeyService {
      */
     static async verifyAuthentication(
         username: string,
-        credential: any,
-        challenge: string
+        _credential: unknown,
+        _challenge: string
     ): Promise<{ success: boolean; userId?: number }> {
+        void _credential;
+        void _challenge;
         // 预留接口：未来实现WebAuthn认证验证
         console.log(`[Passkey] 验证用户 ${username} 的认证响应`);
 
@@ -232,8 +236,9 @@ export class PasskeyManager {
      */
     static async register(
         username: string,
-        displayName: string
+        _displayName: string
     ): Promise<{ success: boolean; error?: string }> {
+        void _displayName;
         try {
             console.log(`[PasskeyManager] 为用户 ${username} 注册Passkey`);
 

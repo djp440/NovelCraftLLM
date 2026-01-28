@@ -64,7 +64,7 @@ export class BaseAgent {
 
             const response = await this.client.chat.completions.create({
                 model: this.config.llm.model,
-                messages: fullMessages as any,
+                messages: fullMessages as unknown as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
                 temperature: this.config.llm.temperature,
                 max_tokens: this.config.llm.max_tokens,
                 top_p: this.config.llm.top_p,
@@ -109,7 +109,7 @@ export class BaseAgent {
 
             const stream = await this.client.chat.completions.create({
                 model: this.config.llm.model,
-                messages: fullMessages as any,
+                messages: fullMessages as unknown as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
                 temperature: this.config.llm.temperature,
                 max_tokens: this.config.llm.max_tokens,
                 top_p: this.config.llm.top_p,

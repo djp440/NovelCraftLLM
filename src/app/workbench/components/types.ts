@@ -35,7 +35,7 @@ export interface NewProjectData {
 /**
  * API响应格式
  */
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
     success: boolean;
     message: string;
     data?: T;
@@ -74,6 +74,19 @@ export interface ConfirmDialogConfig {
     onConfirm: () => void;
     onCancel?: () => void;
     destructive?: boolean;
+}
+
+export interface InputDialogConfig {
+    title: string;
+    message?: string;
+    placeholder?: string;
+    initialValue?: string;
+    rows?: number;
+    maxLength?: number;
+    generateText?: string;
+    cancelText?: string;
+    onGenerate: (value: string) => void;
+    onCancel?: () => void;
 }
 
 /**
@@ -148,12 +161,12 @@ export interface WorldBook {
     id: number;
     project_id: number;
     content: string;
-    outline: any | null; // 根据具体大纲结构定义，暂时用any
+    outline: unknown | null;
     created_at: string;
     updated_at: string;
 }
 
 export interface WorldBookData {
     content?: string;
-    outline?: any;
+    outline?: unknown;
 }

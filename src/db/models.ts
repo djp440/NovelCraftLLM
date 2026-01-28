@@ -1,5 +1,4 @@
 import { getDb } from './database';
-import { sql } from 'kysely';
 import type {
     User,
     NewUser,

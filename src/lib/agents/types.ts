@@ -51,7 +51,7 @@ export interface AgentConfig {
         format?: string;
         include_structured_data?: boolean;
     };
-    [key: string]: any; // 支持额外的 TOML 字段
+    [key: string]: unknown;
 }
 
 export interface AgentResponse {
@@ -61,7 +61,7 @@ export interface AgentResponse {
         completion_tokens: number;
         total_tokens: number;
     };
-    raw?: any;
+    raw?: unknown;
 }
 
 export interface Message {

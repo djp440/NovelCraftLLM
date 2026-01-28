@@ -67,17 +67,19 @@ class UserService {
 
             this.logger.info('用户信息获取成功', { userId, userName: user.name });
             return user;
-        } catch (error: any) {
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            const stack = error instanceof Error ? error.stack : undefined;
             this.logger.error('获取用户信息失败', {
                 userId,
-                error: error.message,
-                stack: error.stack
+                error: message,
+                stack
             });
             throw error;
         }
     }
 
-    async updateUser(userId: number, data: any) {
+    async updateUser(userId: number, data: { name?: string; email?: string }) {
         this.logger.info('开始更新用户信息', { userId, updateData: data });
 
         try {
@@ -92,10 +94,11 @@ class UserService {
 
             this.logger.info('用户信息更新成功', { userId });
             return { success: true, userId };
-        } catch (error: any) {
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
             this.logger.error('更新用户信息失败', {
                 userId,
-                error: error.message
+                error: message
             });
             throw error;
         }
@@ -117,15 +120,17 @@ async function demoUserService() {
         // 错误案例 - 无效用户ID
         try {
             await userService.getUser(-1);
-        } catch (error: any) {
-            console.log('预期中的错误:', error.message);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.log('预期中的错误:', message);
         }
 
         // 错误案例 - 无效数据
         try {
             await userService.updateUser(1, { name: 'A' });
-        } catch (error: any) {
-            console.log('预期中的错误:', error.message);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : '未知错误';
+            console.log('预期中的错误:', message);
         }
     } catch (error) {
         console.error('未预期的错误:', error);

@@ -8,7 +8,7 @@ import { Models } from '@/db/models';
 import { getAuthUser } from '@/app/api/auth-helper';
 
 // 响应类型定义
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
     success: boolean;
     message: string;
     data?: T;

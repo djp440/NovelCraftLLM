@@ -9,7 +9,7 @@ import path from 'path';
  */
 export class MigrationManager {
     private static migrationsDir = path.join(__dirname, 'migrations');
-    private static migrationTableName = 'migrations';
+    private static migrationTableName = 'migrations' as const;
 
     /**
      * 初始化迁移系统
@@ -61,7 +61,7 @@ export class MigrationManager {
     private static async getAppliedMigrations(): Promise<Set<string>> {
         const db = getDb();
         const migrations = await db
-            .selectFrom(this.migrationTableName as any)
+            .selectFrom(this.migrationTableName)
             .select('name')
             .execute();
 
@@ -115,7 +115,7 @@ export class MigrationManager {
     private static async recordMigration(name: string) {
         const db = getDb();
         await db
-            .insertInto(this.migrationTableName as any)
+            .insertInto(this.migrationTableName)
             .values({ name })
             .execute();
     }
@@ -123,7 +123,8 @@ export class MigrationManager {
     /**
      * 回滚到指定迁移（开发环境使用）
      */
-    static async rollback(targetMigration?: string) {
+    static async rollback(_targetMigration?: string) {
+        void _targetMigration;
         console.warn('回滚功能仅用于开发环境');
         // 实现回滚逻辑（根据需求实现）
     }
@@ -143,9 +144,9 @@ export class MigrationManager {
                     .filter((name) => !applied.has(name)),
                 total: files.length,
             };
-        } catch (error: any) {
+        } catch (error) {
             // 如果 migrations 表不存在，返回空的应用列表
-            if (error.message?.includes('no such table: migrations')) {
+            if (error instanceof Error && error.message.includes('no such table: migrations')) {
                 const files = this.getMigrationFiles();
                 return {
                     applied: [],

@@ -29,7 +29,6 @@ export default function WorkbenchPage() {
 
     // 操作状态
     const [creatingProject, setCreatingProject] = useState(false);
-    const [deletingProject, setDeletingProject] = useState(false);
 
     // 加载项目数据
     useEffect(() => {
@@ -81,7 +80,6 @@ export default function WorkbenchPage() {
         if (!projectToDelete) return;
 
         try {
-            setDeletingProject(true);
             await deleteProject(projectToDelete.id);
 
             // 从列表中移除项目
@@ -93,7 +91,6 @@ export default function WorkbenchPage() {
             console.error('删除项目失败:', err);
             alert('删除项目失败，请重试');
         } finally {
-            setDeletingProject(false);
             setProjectToDelete(null);
             setShowConfirmDialog(false);
         }
@@ -229,10 +226,10 @@ export default function WorkbenchPage() {
                             <div className="space-y-3">
                                 {projects.length > 0 ? (
                                     <>
-                                        {getRecentProjects().map((project, index) => (
+                                        {getRecentProjects().map((project) => (
                                             <div key={project.id} className="border-l-4 border-blue-500 pl-3">
                                                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                                                    创建了项目 "{project.title}"
+                                                    创建了项目 “{project.title}”
                                                 </p>
                                                 <p className="text-xs text-gray-500 dark:text-gray-400">
                                                     {new Date(project.created_at).toLocaleDateString('zh-CN')}

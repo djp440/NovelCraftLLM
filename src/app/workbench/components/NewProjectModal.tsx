@@ -6,7 +6,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { NewProjectData, ProjectStatus } from './types';
+import { NewProjectData } from './types';
 
 interface NewProjectModalProps {
     isOpen: boolean;
@@ -181,7 +181,7 @@ export default function NewProjectModal({
                                     </p>
                                 )}
                                 <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    建议使用简洁明了的标题，如"星辰之旅"、"暗影之城"等
+                                    建议使用简洁明了的标题，如“星辰之旅”、“暗影之城”等
                                 </p>
                             </div>
 

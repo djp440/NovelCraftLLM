@@ -60,7 +60,7 @@ interface LogEntry {
     level: LogLevel;
     module: string;
     message: string;
-    data?: any;
+    data?: unknown;
 }
 
 /**
@@ -194,7 +194,7 @@ export class Logger {
                 const dataStr = typeof data === 'string' ? data : JSON.stringify(data);
                 logLine += ` | ${dataStr}`;
             } catch (error) {
-                logLine += ` | [无法序列化的数据]`;
+                logLine += ` | [无法序列化的数据: ${String(error)}]`;
             }
         }
 
@@ -242,7 +242,7 @@ export class Logger {
     /**
      * 记录日志
      */
-    private log(level: LogLevel, module: string, message: string, data?: any): void {
+    private log(level: LogLevel, module: string, message: string, data?: unknown): void {
         // 检查日志级别
         if (LogLevelValue[level] < LogLevelValue[this.config.level]) {
             return;
@@ -261,35 +261,35 @@ export class Logger {
     /**
      * 记录DEBUG级别日志
      */
-    debug(module: string, message: string, data?: any): void {
+    debug(module: string, message: string, data?: unknown): void {
         this.log(LogLevel.DEBUG, module, message, data);
     }
 
     /**
      * 记录INFO级别日志
      */
-    info(module: string, message: string, data?: any): void {
+    info(module: string, message: string, data?: unknown): void {
         this.log(LogLevel.INFO, module, message, data);
     }
 
     /**
      * 记录WARN级别日志
      */
-    warn(module: string, message: string, data?: any): void {
+    warn(module: string, message: string, data?: unknown): void {
         this.log(LogLevel.WARN, module, message, data);
     }
 
     /**
      * 记录ERROR级别日志
      */
-    error(module: string, message: string, data?: any): void {
+    error(module: string, message: string, data?: unknown): void {
         this.log(LogLevel.ERROR, module, message, data);
     }
 
     /**
      * 记录FATAL级别日志
      */
-    fatal(module: string, message: string, data?: any): void {
+    fatal(module: string, message: string, data?: unknown): void {
         this.log(LogLevel.FATAL, module, message, data);
     }
 
@@ -298,11 +298,11 @@ export class Logger {
      */
     createModuleLogger(module: string) {
         return {
-            debug: (message: string, data?: any) => this.debug(module, message, data),
-            info: (message: string, data?: any) => this.info(module, message, data),
-            warn: (message: string, data?: any) => this.warn(module, message, data),
-            error: (message: string, data?: any) => this.error(module, message, data),
-            fatal: (message: string, data?: any) => this.fatal(module, message, data),
+            debug: (message: string, data?: unknown) => this.debug(module, message, data),
+            info: (message: string, data?: unknown) => this.info(module, message, data),
+            warn: (message: string, data?: unknown) => this.warn(module, message, data),
+            error: (message: string, data?: unknown) => this.error(module, message, data),
+            fatal: (message: string, data?: unknown) => this.fatal(module, message, data),
         };
     }
 }

@@ -249,11 +249,34 @@ export async function getCharacters(projectId: number): Promise<Character[]> {
         throw new Error(`获取角色列表失败: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data.map((c: any) => ({
-        ...c,
-        tags: c.tags ? JSON.parse(c.tags) : []
-    }));
+    const data: unknown = await response.json();
+    if (!Array.isArray(data)) {
+        throw new Error('获取角色列表失败: 返回数据格式不正确');
+    }
+
+    return data.map((item) => {
+        const c = item as unknown as Character & { tags?: unknown };
+        const rawTags = c.tags;
+        let tags: string[] = [];
+
+        if (typeof rawTags === 'string') {
+            try {
+                const parsed = JSON.parse(rawTags) as unknown;
+                if (Array.isArray(parsed)) {
+                    tags = parsed.filter((t): t is string => typeof t === 'string');
+                }
+            } catch {
+                tags = [];
+            }
+        } else if (Array.isArray(rawTags)) {
+            tags = rawTags.filter((t): t is string => typeof t === 'string');
+        }
+
+        return {
+            ...(c as Character),
+            tags,
+        };
+    });
 }
 
 export async function createCharacter(projectId: number, data: NewCharacterData): Promise<Character> {

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { Project } from '../components/types';
 import { getProject, updateProject } from '../utils/api';
@@ -18,12 +19,17 @@ export default function ProjectOverviewPage() {
         description: '',
         cover_image: '',
     });
+    const [coverPreviewFailed, setCoverPreviewFailed] = useState(false);
 
     useEffect(() => {
         if (id) {
             loadProject(id);
         }
     }, [id]);
+
+    useEffect(() => {
+        setCoverPreviewFailed(false);
+    }, [formData.cover_image]);
 
     const loadProject = async (projectId: number) => {
         try {
@@ -109,14 +115,22 @@ export default function ProjectOverviewPage() {
                             </div>
                             {formData.cover_image && (
                                 <div className="w-24 h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 border border-gray-200">
-                                    <img
-                                        src={formData.cover_image}
-                                        alt="封面预览"
-                                        className="w-full h-full object-cover"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = 'https://placehold.co/200x300?text=No+Image';
-                                        }}
-                                    />
+                                    {coverPreviewFailed ? (
+                                        <div className="w-full h-full flex items-center justify-center text-xs text-gray-500 px-2 text-center">
+                                            预览加载失败
+                                        </div>
+                                    ) : (
+                                        <Image
+                                            src={formData.cover_image}
+                                            alt="封面预览"
+                                            width={192}
+                                            height={256}
+                                            className="w-full h-full object-cover"
+                                            unoptimized
+                                            loader={({ src }) => src}
+                                            onError={() => setCoverPreviewFailed(true)}
+                                        />
+                                    )}
                                 </div>
                             )}
                         </div>
